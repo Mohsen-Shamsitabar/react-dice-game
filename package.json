@@ -1,9 +1,9 @@
 {
-  "name": "react-dice-roll",
+  "name": "react-dice-game",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Mohsen-Shamsitabar.github.io/react-dice-roll",
+  "homepage": "https://Mohsen-Shamsitabar.github.io/react-dice-game",
   "scripts": {
     "dev": "vite",
     "predeploy": "npm run build",
