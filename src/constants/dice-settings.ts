@@ -1,3 +1,5 @@
+import type { DiceState } from "@/types/dice.ts";
+
 export const DICE_SIZE = 128;
 
 export const DOTS_MAP = new Map<number, boolean[]>([
@@ -8,3 +10,14 @@ export const DOTS_MAP = new Map<number, boolean[]>([
   [5, [true, false, true, false, true, false, true, false, true]],
   [6, [true, false, true, true, false, true, true, false, true]],
 ]);
+
+export const MAX_QUEUE_LENGTH = 63;
+
+export const INITIAL_STATE: DiceState = {
+  front: 1,
+  right: 2,
+  back: 6,
+  left: 5,
+  top: 3,
+  bottom: 4,
+};

@@ -1,61 +1,14 @@
 import DiceFace from "@/components/DiceFace.tsx";
-import { DICE_SIZE } from "@/constants/dice-settings.ts";
-import type { Dice, DiceState, Move, Rotation } from "@/types/dice.ts";
+import {
+  DICE_SIZE,
+  INITIAL_STATE,
+  MAX_QUEUE_LENGTH,
+} from "@/constants/dice-settings.ts";
+import type { Dice, Move, Rotation } from "@/types/dice.ts";
 import assertNever from "@/utilities/assert-never.ts";
 import cn from "@/utilities/cn.ts";
+import getFacesByMove from "@/utilities/get-faces-by-move.ts";
 import { useMemo, useReducer, useRef, useState } from "react";
-
-const INITIAL_STATE: DiceState = {
-  front: 1,
-  right: 2,
-  back: 6,
-  left: 5,
-  top: 3,
-  bottom: 4,
-};
-
-const getFacesByMove = (state: DiceState, move: Move): DiceState => {
-  switch (move) {
-    case "LEFT":
-      return {
-        ...state,
-        front: state.right,
-        left: state.front,
-        back: state.left,
-        right: state.back,
-      };
-
-    case "RIGHT":
-      return {
-        ...state,
-        front: state.left,
-        right: state.front,
-        back: state.right,
-        left: state.back,
-      };
-
-    case "UP":
-      return {
-        ...state,
-        front: state.bottom,
-        top: state.front,
-        back: state.top,
-        bottom: state.back,
-      };
-
-    case "DOWN":
-      return {
-        ...state,
-        front: state.top,
-        bottom: state.front,
-        back: state.bottom,
-        top: state.back,
-      };
-
-    default:
-      return assertNever(move);
-  }
-};
 
 export const useDice = (): Dice => {
   const [faces, updateFacesByMove] = useReducer(getFacesByMove, INITIAL_STATE);
@@ -66,25 +19,25 @@ export const useDice = (): Dice => {
 
   const moveQueue = useRef<Move[]>([]);
   const activeMove = useRef<Move | null>(null);
-  const maxQueueLength = useRef<number>(64);
+  const maxQueueLength = useRef<number>(MAX_QUEUE_LENGTH);
 
-  const playNext = () => {
+  const playNextMove = () => {
     if (moveQueue.current.length <= 0) {
       setIsRolling(false);
       return;
     }
 
-    const next = moveQueue.current.shift();
+    const nextMove = moveQueue.current.shift();
 
-    if (!next) {
+    if (!nextMove) {
       setIsRolling(false);
       return;
     }
 
-    activeMove.current = next;
+    activeMove.current = nextMove;
     setIsAnimating(true);
 
-    switch (next) {
+    switch (nextMove) {
       case "LEFT":
         setRotation({ x: 0, y: -90 });
         return;
@@ -98,7 +51,7 @@ export const useDice = (): Dice => {
         setRotation({ x: -90, y: 0 });
         return;
       default:
-        assertNever(next);
+        assertNever(nextMove);
     }
   };
 
@@ -108,18 +61,18 @@ export const useDice = (): Dice => {
     if (event.target !== event.currentTarget) return;
     if (event.propertyName !== "transform") return;
 
-    const move = activeMove.current;
+    const finishedMove = activeMove.current;
 
     activeMove.current = null;
 
-    if (!move) return;
+    if (!finishedMove) return;
 
     setIsAnimating(false);
-    updateFacesByMove(move);
+    updateFacesByMove(finishedMove);
     setRotation({ x: 0, y: 0 });
 
     setTimeout(() => {
-      playNext();
+      playNextMove();
     }, 50);
   };
 
@@ -129,7 +82,7 @@ export const useDice = (): Dice => {
     moveQueue.current.push(move);
 
     if (isRolling) return;
-    playNext();
+    playNextMove();
     setIsRolling(true);
   };
 
@@ -160,7 +113,7 @@ export const useDice = (): Dice => {
     }
 
     if (isRolling) return;
-    playNext();
+    playNextMove();
     setIsRolling(true);
   };
 

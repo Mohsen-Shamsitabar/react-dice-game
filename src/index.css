@@ -1,25 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* --color-* */
-/* --font-* */
-/* --text-* */
-/* --font-weight-* */
-/* --tracking-* */
-/* --leading-* */
-/* --breakpoint-* */
-/* --container-* */
-/* --spacing-* */
-/* --radius-* */
-/* --shadow-* */
-/* --inset-shadow-* */
-/* --drop-shadow-* */
-/* --blur-* */
-/* --perspective-* */
-/* --aspect-* */
-/* --ease-* */
-/* --animate-* */
-
 :root {
   font-family:
     system-ui,
@@ -42,6 +23,31 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* --color-* */
+/* --font-* */
+/* --text-* */
+/* --font-weight-* */
+/* --tracking-* */
+/* --leading-* */
+/* --breakpoint-* */
+/* --container-* */
+/* --spacing-* */
+/* --radius-* */
+/* --shadow-* */
+/* --inset-shadow-* */
+/* --drop-shadow-* */
+/* --blur-* */
+/* --perspective-* */
+/* --aspect-* */
+/* --ease-* */
+/* --animate-* */
+
+@theme {
+  --color-dice-dot: black;
+  --color-dice: whitesmoke;
+  --color-dice-border: gray;
+}
+
 @layer base {
   * {
     @apply box-border;
@@ -53,15 +59,7 @@
   }
 }
 
-@utility cell-placeholder {
-  @apply size-4 cursor-pointer border-2;
-  @apply hover:bg-black;
-
-  animation-name: cell-animation;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-duration: 1s;
-}
+/* ========================= */
 
 @keyframes cell-animation {
   0% {
@@ -75,11 +73,17 @@
   }
 }
 
-@theme {
-  --color-dice-dot: black;
-  --color-dice: whitesmoke;
-  --color-dice-border: gray;
+@utility cell-placeholder {
+  @apply size-4 cursor-pointer border-2;
+  @apply hover:bg-black;
+
+  animation-name: cell-animation;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
 }
+
+/* ========================= */
 
 @utility transform-style-3d {
   transform-style: preserve-3d;

@@ -1,4 +1,5 @@
 import { DOTS_MAP } from "@/constants/dice-settings.ts";
+import cn from "@/utilities/cn.ts";
 
 type DiceFaceProps = {
   value: number;
@@ -14,14 +15,12 @@ const DiceFace = (props: DiceFaceProps) => {
     if (!currentDots) return null;
 
     return currentDots.map((isFilled, idx) => {
-      if (!isFilled) {
-        return <div key={idx} />;
-      }
-
       return (
         <div
           key={idx}
-          className="bg-dice-dot rounded-full shadow-sm"
+          className={cn(
+            isFilled ? "bg-dice-dot rounded-full shadow-sm" : undefined,
+          )}
         />
       );
     });
