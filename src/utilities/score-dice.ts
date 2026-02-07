@@ -11,6 +11,8 @@ type StraightCombo = {
 
 const DICE_FACES: DieValue[] = [1, 2, 3, 4, 5, 6] as const;
 
+const PAIRS_SCORE = 1000 as const;
+const TRIPLES_SCORE = 1200 as const;
 const SINGLE_SCORES = {
   1: 100,
   5: 50,
@@ -61,15 +63,6 @@ const scoreDice = (dice: DieValue[]): ScoreResult => {
 
   let totalScore = 0;
 
-  const take = (value: DieValue, n: number, score: number): boolean => {
-    if (dieValueCounter[value]! < n) return false;
-
-    dieValueCounter[value]! -= n;
-    totalScore += score;
-
-    return true;
-  };
-
   // ---- 1) Straights ----
   for (const straightCombo of STRAIGHT_COMBOS) {
     const { pattern, score } = straightCombo;
@@ -94,11 +87,11 @@ const scoreDice = (dice: DieValue[]): ScoreResult => {
   if (pairs.length === 3) {
     pairs.forEach(v => (dieValueCounter[v]! -= 2));
 
-    totalScore += 1000;
+    totalScore += PAIRS_SCORE;
   } else if (triples.length === 2) {
     triples.forEach(v => (dieValueCounter[v]! -= 3));
 
-    totalScore += 1200;
+    totalScore += TRIPLES_SCORE;
   }
 
   // ---- 3) Of-a-kind ----
@@ -109,19 +102,21 @@ const scoreDice = (dice: DieValue[]): ScoreResult => {
     if (count >= 3) {
       const score = scoreOfKind(value, count);
 
-      take(value, count, score);
+      dieValueCounter[value]! -= count;
+      totalScore += score;
     }
   }
 
   // ---- 4) Singles (1 and 5) ----
-  for (const v of [1, 5] as DieValue[]) {
-    const count = dieValueCounter[v]!;
+  for (const value of [1, 5] as DieValue[]) {
+    const count = dieValueCounter[value]!;
 
     if (count > 0) {
       const score =
-        (SINGLE_SCORES[v as keyof typeof SINGLE_SCORES] ?? 0) * count;
+        (SINGLE_SCORES[value as keyof typeof SINGLE_SCORES] ?? 0) * count;
 
-      take(v, count, score);
+      dieValueCounter[value]! -= count;
+      totalScore += score;
     }
   }
 
