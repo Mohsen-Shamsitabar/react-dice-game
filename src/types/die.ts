@@ -1,5 +1,7 @@
 import type { JSX } from "react";
 
+export type DieValue = number;
+
 export type Die = {
   rotateLeft: () => void;
   rotateRight: () => void;
@@ -8,7 +10,7 @@ export type Die = {
   roll: () => void;
   DieCube: JSX.Element;
   isRolling: boolean;
-  value: number;
+  value: DieValue;
 };
 
 export type DieState = {

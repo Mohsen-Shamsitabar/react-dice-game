@@ -1,12 +1,12 @@
-import { DOTS_MAP } from "@/constants/dice-settings.ts";
+import { DOTS_MAP } from "@/constants/die-settings.ts";
 import cn from "@/utilities/cn.ts";
 
-type DiceFaceProps = {
+type DieFaceProps = {
   value: number;
   transform: React.CSSProperties["transform"];
 };
 
-const DiceFace = (props: DiceFaceProps) => {
+const DieFace = (props: DieFaceProps) => {
   const { value, transform } = props;
 
   const renderDots = () => {
@@ -19,7 +19,7 @@ const DiceFace = (props: DiceFaceProps) => {
         <div
           key={idx}
           className={cn(
-            isFilled ? "bg-dice-dot rounded-full shadow-sm" : undefined,
+            isFilled ? "bg-die-dot rounded-full shadow-sm" : undefined,
           )}
         />
       );
@@ -28,14 +28,14 @@ const DiceFace = (props: DiceFaceProps) => {
 
   return (
     <div
-      className="border-dice-border bg-dice absolute h-full w-full border-2 shadow-inner transition-all backface-hidden"
+      className="border-die-border bg-die absolute h-full w-full border-2 shadow-inner transition-all backface-hidden"
       style={{ transform }}
     >
-      <div className="grid h-full w-full grid-cols-3 grid-rows-3 gap-1 p-4">
+      <div className="grid h-full w-full grid-cols-3 grid-rows-3 gap-1 p-2">
         {renderDots()}
       </div>
     </div>
   );
 };
 
-export default DiceFace;
+export default DieFace;

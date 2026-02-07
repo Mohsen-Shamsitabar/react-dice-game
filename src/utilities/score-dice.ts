@@ -1,6 +1,15 @@
-import type { Die } from "@/types/die.ts";
+/**
+ * This algorithm will calculate the moves with higher length,
+ * thats why we start with checking the straigth combos and finish on singles.
+ *
+ * This is because we are using a counter, and each time we calculate a socre,
+ * we decrement the counter value for that face.
+ *
+ * switching the orders will cause major bugs!
+ */
 
-type DieValue = Die["value"];
+import type { DieValue } from "@/types/die.ts";
+
 type ScoreResult = number;
 type DieValueCounter = Record<DieValue, number>;
 
@@ -9,7 +18,7 @@ type StraightCombo = {
   score: number;
 };
 
-const DICE_FACES: DieValue[] = [1, 2, 3, 4, 5, 6] as const;
+const DIE_FACES: DieValue[] = [1, 2, 3, 4, 5, 6] as const;
 
 const PAIRS_SCORE = 1000 as const;
 const TRIPLES_SCORE = 1200 as const;
@@ -81,8 +90,8 @@ const scoreDice = (dice: DieValue[]): ScoreResult => {
   }
 
   // ---- 2) Special set combos ----
-  const pairs = DICE_FACES.filter(v => dieValueCounter[v] === 2);
-  const triples = DICE_FACES.filter(v => dieValueCounter[v] === 3);
+  const pairs = DIE_FACES.filter(v => dieValueCounter[v] === 2);
+  const triples = DIE_FACES.filter(v => dieValueCounter[v] === 3);
 
   if (pairs.length === 3) {
     pairs.forEach(v => (dieValueCounter[v]! -= 2));
@@ -95,8 +104,8 @@ const scoreDice = (dice: DieValue[]): ScoreResult => {
   }
 
   // ---- 3) Of-a-kind ----
-  for (let i = DICE_FACES.length - 1; i >= 0; i--) {
-    const value = DICE_FACES[i]!;
+  for (let i = DIE_FACES.length - 1; i >= 0; i--) {
+    const value = DIE_FACES[i]!;
     const count = dieValueCounter[value]!;
 
     if (count >= 3) {

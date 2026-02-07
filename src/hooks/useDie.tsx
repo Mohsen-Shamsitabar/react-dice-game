@@ -1,16 +1,16 @@
-import DiceFace from "@/components/DiceFace.tsx";
+import DieFace from "@/components/DieFace.tsx";
 import {
-  DICE_SIZE,
+  DIE_SIZE,
   INITIAL_STATE,
   MAX_QUEUE_LENGTH,
-} from "@/constants/dice-settings.ts";
+} from "@/constants/die-settings.ts";
 import type { Die, Move, Rotation } from "@/types/die.ts";
 import assertNever from "@/utilities/assert-never.ts";
 import cn from "@/utilities/cn.ts";
 import getFacesByMove from "@/utilities/get-faces-by-move.ts";
 import { useMemo, useReducer, useRef, useState } from "react";
 
-export const useDice = (): Die => {
+export const useDie = (): Die => {
   const [faces, updateFacesByMove] = useReducer(getFacesByMove, INITIAL_STATE);
 
   const [rotation, setRotation] = useState<Rotation>({ x: 0, y: 0 });
@@ -117,11 +117,11 @@ export const useDice = (): Die => {
     setIsRolling(true);
   };
 
-  const DiceCube = useMemo(() => {
-    const halfSize = DICE_SIZE / 2;
+  const DieCube = useMemo(() => {
+    const halfSize = DIE_SIZE / 2;
 
     return (
-      <div className="perspective-1000 relative">
+      <div className="perspective-1000 relative select-none">
         <div
           className={cn(
             "transform-style-3d relative aspect-square size-full",
@@ -131,31 +131,31 @@ export const useDice = (): Die => {
           )}
           style={{
             transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-            width: `${DICE_SIZE}px`,
+            width: `${DIE_SIZE}px`,
           }}
           onTransitionEnd={handleTransitionEnd}
         >
-          <DiceFace
+          <DieFace
             value={faces.front}
             transform={`translateZ(${halfSize}px)`}
           />
-          <DiceFace
+          <DieFace
             value={faces.back}
             transform={`rotateY(180deg) translateZ(${halfSize}px)`}
           />
-          <DiceFace
+          <DieFace
             value={faces.right}
             transform={`rotateY(90deg) translateZ(${halfSize}px)`}
           />
-          <DiceFace
+          <DieFace
             value={faces.left}
             transform={`rotateY(-90deg) translateZ(${halfSize}px)`}
           />
-          <DiceFace
+          <DieFace
             value={faces.top}
             transform={`rotateX(90deg) translateZ(${halfSize}px)`}
           />
-          <DiceFace
+          <DieFace
             value={faces.bottom}
             transform={`rotateX(-90deg) translateZ(${halfSize}px)`}
           />
@@ -172,6 +172,6 @@ export const useDice = (): Die => {
     roll,
     isRolling,
     value: faces.front,
-    DieCube: DiceCube,
+    DieCube,
   };
 };

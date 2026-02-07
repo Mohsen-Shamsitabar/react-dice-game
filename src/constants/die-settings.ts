@@ -1,6 +1,6 @@
 import type { DieState } from "@/types/die.ts";
 
-export const DICE_SIZE = 128;
+export const DIE_SIZE = 64;
 
 export const DOTS_MAP = new Map<number, boolean[]>([
   [1, [false, false, false, false, true, false, false, false, false]],

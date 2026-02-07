@@ -155,9 +155,9 @@
   /* --ease-* */
   /* --animate-* */
 
-  --color-dice-dot: black;
-  --color-dice: whitesmoke;
-  --color-dice-border: gray;
+  --color-die-dot: black;
+  --color-die: whitesmoke;
+  --color-die-border: gray;
 }
 
 @layer base {
@@ -173,30 +173,6 @@
     width: 100vw;
     height: 100vh;
   }
-}
-
-/* ========================= */
-
-@keyframes cell-animation {
-  0% {
-    scale: 1;
-  }
-  50% {
-    scale: 2;
-  }
-  100% {
-    scale: 1;
-  }
-}
-
-@utility cell-placeholder {
-  @apply size-4 cursor-pointer border-2;
-  @apply hover:bg-black;
-
-  animation-name: cell-animation;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-duration: 1s;
 }
 
 /* ========================= */
