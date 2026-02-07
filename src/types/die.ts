@@ -1,17 +1,17 @@
 import type { JSX } from "react";
 
-export type Dice = {
+export type Die = {
   rotateLeft: () => void;
   rotateRight: () => void;
   rotateUp: () => void;
   rotateDown: () => void;
   roll: () => void;
-  DiceCube: JSX.Element;
+  DieCube: JSX.Element;
   isRolling: boolean;
   value: number;
 };
 
-export type DiceState = {
+export type DieState = {
   front: number;
   back: number;
   right: number;

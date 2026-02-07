@@ -4,13 +4,13 @@ import {
   INITIAL_STATE,
   MAX_QUEUE_LENGTH,
 } from "@/constants/dice-settings.ts";
-import type { Dice, Move, Rotation } from "@/types/dice.ts";
+import type { Die, Move, Rotation } from "@/types/die.ts";
 import assertNever from "@/utilities/assert-never.ts";
 import cn from "@/utilities/cn.ts";
 import getFacesByMove from "@/utilities/get-faces-by-move.ts";
 import { useMemo, useReducer, useRef, useState } from "react";
 
-export const useDice = (): Dice => {
+export const useDice = (): Die => {
   const [faces, updateFacesByMove] = useReducer(getFacesByMove, INITIAL_STATE);
 
   const [rotation, setRotation] = useState<Rotation>({ x: 0, y: 0 });
@@ -172,6 +172,6 @@ export const useDice = (): Dice => {
     roll,
     isRolling,
     value: faces.front,
-    DiceCube,
+    DieCube: DiceCube,
   };
 };

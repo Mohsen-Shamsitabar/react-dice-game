@@ -1,5 +1,5 @@
 import { useDice } from "@/hooks/useDice.tsx";
-import type { Dice } from "@/types/dice.ts";
+import type { Die } from "@/types/die.ts";
 import { useEffect, useMemo } from "react";
 
 const DiceRoll = () => {
@@ -10,14 +10,14 @@ const DiceRoll = () => {
   const dice5 = useDice();
   const dice6 = useDice();
 
-  const allDice = useMemo<Dice[]>(
+  const allDice = useMemo<Die[]>(
     () => [dice1, dice2, dice3, dice4, dice5, dice6],
     [dice1, dice2, dice3, dice4, dice5, dice6],
   );
 
   const renderAllDice = () => {
     return allDice.map((dice, idx) => (
-      <div key={`${dice.value}-${idx}`}>{dice.DiceCube}</div>
+      <div key={`${dice.value}-${idx}`}>{dice.DieCube}</div>
     ));
   };
 
@@ -50,7 +50,7 @@ const DiceRoll = () => {
     return () => {
       window.removeEventListener("keypress", handleKeypress);
     };
-  });
+  }, []);
 
   return (
     <section className="flex size-full flex-col items-center justify-center">

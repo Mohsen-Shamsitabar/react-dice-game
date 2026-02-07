@@ -1,4 +1,4 @@
-import type { DiceState } from "@/types/dice.ts";
+import type { DieState } from "@/types/die.ts";
 
 export const DICE_SIZE = 128;
 
@@ -13,7 +13,7 @@ export const DOTS_MAP = new Map<number, boolean[]>([
 
 export const MAX_QUEUE_LENGTH = 63;
 
-export const INITIAL_STATE: DiceState = {
+export const INITIAL_STATE: DieState = {
   front: 1,
   right: 2,
   back: 6,

@@ -1,7 +1,7 @@
-import type { DiceState, Move } from "@/types/dice.ts";
+import type { DieState, Move } from "@/types/die.ts";
 import assertNever from "@/utilities/assert-never.ts";
 
-const getFacesByMove = (state: DiceState, move: Move): DiceState => {
+const getFacesByMove = (state: DieState, move: Move): DieState => {
   switch (move) {
     case "LEFT":
       return {
